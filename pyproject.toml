@@ -1,0 +1,10 @@
+[project]
+name = "flood-prediction-model"
+version = "0.1.0"
+description = "Flood Prediction Model created as Midterm Project for the Machine Learning Zoomcamp 2025."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "pandas>=2.3.3",
+    "scikit-learn>=1.7.2",
+]
