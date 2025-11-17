@@ -1,11 +1,23 @@
 
 import pickle
 
+import uvicorn
+from fastapi import FastAPI
+
+
+app = FastAPI(title="Flood Probability Prediction API")
+
 
 with open("model.bin", "rb") as f_in:
-    model = pickle.load(f_in) 
+    model = pickle.load(f_in)
 
-record = [7, 5, 8, 4, 8, 4, 8, 4, 3, 7, 3, 5, 7, 4, 7, 2, 3, 6, 7, 2]
 
-predicted_proba = model.predict([record])[0]
-print(f"Predicted Flood Probability: {predicted_proba:.3f}")
+@app.post("/predict")
+def predict_flood_probability(record: list[int]) -> dict[str, float]:
+    predicted_proba = model.predict([record])[0]
+    return {"flood_probability": predicted_proba}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
