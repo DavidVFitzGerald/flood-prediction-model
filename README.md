@@ -35,13 +35,11 @@ A Dockerfile has been created and can be used to build and run the predict app w
 
 The app was temporarily deployed on Fly.io and tested, as shown in the screenshots below. 
 
-![fly_app_deployment_success](images/fly_app_deployment_success.jpg)
+![fly_app_deployment_success](images/fly_app_deployment_success.png)
 
-![fly_app_accessed_online](images/fly_app_accessed_online.jpg)
+![fly_app_accessed_online](images/fly_app_accessed_online.png)
 
-![fly_app_successful_response](images/fly_app_successful_response.jpg)
-
-Fly app deployment success
+![fly_app_successful_response](images/fly_app_successful_response.png)
 
 To avoid any unnecessary costs, the app was destroyed.
 
@@ -67,17 +65,17 @@ docker run -p 8000:8000 davidvfitzgerald/flood-prediction-model:prod
 ```
 
 3. To test the app, open the URL and go to the docs as shown below.
-![app_launched_via_container](images/app_launched_via_container.jpg)
+![app_launched_via_container](images/app_launched_via_container.png)
 
 4. Click on the predict app and try it outby providing the following list as input value:
 
 ```
 [7, 5, 8, 4, 8, 4, 8, 4, 3, 7, 3, 5, 7, 4, 7, 2, 3, 6, 7, 2]
 ```
-![app_input_value](images/app_input_value.jpg)
+![app_input_value](images/app_input_value.png)
 
 5. You should get the following response:
-![app_response](images/app_response.jpg)
+![app_response](images/app_response.png)
 
 
 ### Option 2: clone the repository
