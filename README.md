@@ -11,13 +11,13 @@ Being able to estimate the probability of flooding of an area is a crucial tool 
 
 
 ## Project Goal
-The goal of this project is to estimate the probability of flooding of an area based on various factors. This is achieved by testing different machine learning models on the data available, and selecting the best-performing one. The selected model is deployed as a service in a Docker container.
+The goal of this project is to estimate the probability of flooding of an area based on various factors. This is achieved by testing different machine learning models on the data available, and selecting the best-performing model. The selected model is deployed as a service in a Docker container.
 
 
 ## Data
 The dataset used for this project is fictitious. It was generated for a competition hosted on [kaggle](https://www.kaggle.com/competitions/playground-series-s4e5/data). To facilitate reproducibility, the dataset has been included in the files of this project. The dataset is contained in the ```train.csv``` file.
 
-This dataset contains an id column, 20 features representing different variables that can potentially influence flooding, and the flood probability, which is the target varaiable. As described in the EDA section of the jupyter notebook ```notebook.ipynb```, all features are of type ```int``` and the target variable is of type ```float```. For details regarding the distributions of the variables and their correlation, refer to the EDA section in the notebook.
+This dataset contains an id column, 20 features representing different variables that can potentially influence flooding, and the flood probability, which is the target variable. As described in the EDA section of the jupyter notebook ```notebook.ipynb```, all features are of type ```int``` and the target variable is of type ```float```. For details regarding the distributions of the variables and their correlation, refer to the EDA section in the notebook.
 
 
 ## Model Training
@@ -26,15 +26,16 @@ This dataset contains an id column, 20 features representing different variables
 2. Ridge
 3. DecisionTreeRegressor
 4. XGBoost
+
 The performance of the models was assessed using the root mean square error (RMSE).
 
-As explained in the notebook, based on the different parameter values tested with the different models, the lowest RMSE value was obtained with the LinearRegression model. The LinearRegression model was therefore trained using the full training dataset and used for creating the final model.
+As explained in the notebook, based on the different parameter values tested with each model, the lowest RMSE value was obtained with the LinearRegression model. This model was therefore trained using the full training dataset and used for creating the final model.
 
 
 ## App Containerization and Deployment
 The training of the final model is performed in the ```train.py``` script, which saves the model in a bin file.
 
-The ```predict.py``` script contains the app that serves predictions of the flood probability based on the provided input values. For a given list of feature values, it returns a dictionary containing the flood probability.
+The ```predict.py``` script contains the app that loads the model and serves predictions of the flood probability based on the provided input values. For a given list of feature values, it returns a dictionary containing the flood probability.
 
 Example input:
 ```
@@ -56,9 +57,9 @@ The app was temporarily deployed on Fly.io and tested, as shown in the screensho
 To avoid any unnecessary costs, the app was destroyed.
 
 
-## How to Reproduce
+## How to Reproduce Project
 
-### Option 1: download the image from Docker Hub (subject to time limit)
+### Option 1: download the image from Docker Hub (if available)
 The image has been made available on Docker Hub for a limited time (it might no longer be available). To be able to use it, you need to have Docker installed on the machine you want to run the image on, and you need an account that allows you to access Docker Hub.
 
 1. First check if the image is still available:
@@ -66,7 +67,7 @@ The image has been made available on Docker Hub for a limited time (it might no 
     docker manifest inspect davidvfitzgerald/flood-prediction-model:prod
     ```
 
-    If information is returned, this means the image is still online and can be used. If the message "no such manifest" is returned, then the image is no longer online and you will need to use the other option below to run the app.
+    If information is returned, this means the image is still online and can be used. If the message "no such manifest" is returned, then the image is no longer online and you will need to use the [other option](#option-2-clone-the-repository) to run the app.
 
 2. If the image is available, run the following commands to download the image and run it:
     ```
@@ -79,14 +80,14 @@ The image has been made available on Docker Hub for a limited time (it might no 
 3. To test the app, open the URL and go to the docs as shown below.
     ![app_launched_via_container](images/app_launched_via_container.png)
 
-4. Click on the predict app and try it outby providing the following list as input value:
+4. Click on the predict app and try it out by providing the following list as input value:
 
     ```
     [7, 5, 8, 4, 8, 4, 8, 4, 3, 7, 3, 5, 7, 4, 7, 2, 3, 6, 7, 2]
     ```
     ![app_input_value](images/app_input_value.png)
 
-5. You should get the following response:
+5. Click on the Execute button. You should get the following response:
     ![app_response](images/app_response.png)
 
 
@@ -94,10 +95,10 @@ The image has been made available on Docker Hub for a limited time (it might no 
 
 Follow the steps described below in case the container image cannot be pulled from Docker Hub. 
 
-There are 2 alternatives: either you can build and run the docker container, or you can simply run the ```predict.py``` script.
+There are 2 alternatives: either you can build and run the Docker container, or you can simply run the ```predict.py``` script.
 
 #### Alternative A: build and run Docker container
-You will need to have git and Docker installed in order to build and run the docker image from the Dockerfile.
+You will need to have git and Docker installed in order to build and run the Docker image from the Dockerfile.
 
 1. To clone the repository, use the following command:
     ```
@@ -112,7 +113,7 @@ You will need to have git and Docker installed in order to build and run the doc
     docker run -it --rm -p 8000:8000 flood-prediction
     ```
 
-3. You will then be able to open the app in a browser, and test it as described in steps 4 and 5 under [Option 1](#option-1-download-the-image-from-docker-hub-subject-to-time-limit).
+3. You will then be able to open the app in a browser using the URL provided, and test it as described in steps 4 and 5 under [Option 1](#option-1-download-the-image-from-docker-hub-if-available).
 
 #### Alternative B: run predict script
 To be able to run the script you must have the environment setup. The easiest is to use uv, as the repository was created as a uv project. Install uv in case you do not have it already.
@@ -122,7 +123,7 @@ To be able to run the script you must have the environment setup. The easiest is
     uv run predict.py
     ```
 
-2. You will then be able to open the app in a browser, and test it as described in steps 4 and 5 under ![Option 1](#option-1).
+2. You will then be able to open the app in a browser using the URL provided, and test it as described in steps 4 and 5 under [Option 1](#option-1-download-the-image-from-docker-hub-if-available).
 
 
 ## References
